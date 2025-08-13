@@ -1,5 +1,6 @@
 package com.sam.coroutines
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -7,12 +8,20 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlin.coroutines.EmptyCoroutineContext
 
 fun main(): Unit = runBlocking {
-    launch(Dispatchers.IO){
+//    val scope = CoroutineScope(EmptyCoroutineContext)
+    launch(Dispatchers.Unconfined){
         doSomething(1)
-
     }
+
+    launch {
+        doSomething(2)
+        doOtherThing(2)
+    }
+
+
     val result: Deferred<String> = async{
         returnSomething()
     }
